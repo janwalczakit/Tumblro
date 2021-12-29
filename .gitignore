@@ -10,6 +10,15 @@
 *.userosscache
 *.sln.docstates
 
+# Xamarin Components
+Components/
+
+# ignore Xamarin.Android Resource.Designer.cs files
+**/*.Droid/**/[Rr]esource.[Dd]esigner.cs
+**/*.Android/**/[Rr]esource.[Dd]esigner.cs
+**/Android/**/[Rr]esource.[Dd]esigner.cs
+**/Droid/**/[Rr]esource.[Dd]esigner.cs
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -331,6 +340,8 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+.vscode/settings.json
 
 # OpenCover UI analysis results
 OpenCover/
