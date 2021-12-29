@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             NavigationPage.HasNavigationBar="false"
+             prism:ViewModelLocator.AutowireViewModel="True"
+               xmlns:local1="clr-namespace:Tumblro"
+                xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+ios:Page.UseSafeArea="true"
+          BackgroundColor="{StaticResource CBackgroundDefault}" 
+             x:Class="Tumblro.Views.BlogPosts">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local1:InvertBoolenConverter x:Key="cnvInvert"></local1:InvertBoolenConverter>
+            <local1:StringGMTToLocalConverter x:Key="cnvGMTToLocal"></local1:StringGMTToLocalConverter>
+            <local1:StringNullOrEmptyBoolConverter x:Key="cnvEmptyToBool"></local1:StringNullOrEmptyBoolConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+    <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="100" HeightRequest="100"  Color="Orange"
+                                   
+                                   IsVisible="{Binding IsLoading,Mode=OneWay}" 
+                                   IsRunning="{Binding IsLoading,Mode=OneWay}"
+           />
+        <Grid RowSpacing="0" RowDefinitions="0.5*,auto,auto,6*"  IsVisible="{Binding IsLoading, Converter={StaticResource cnvInvert}}"
+            >
+            <Grid BackgroundColor="{StaticResource CBackgroundDefault}" ColumnSpacing="5" RowSpacing="0"  Grid.Row="0" ColumnDefinitions="3*,2*,*,*" >
+             <Entry  Grid.Column="0" TextColor="{StaticResource TextDefault}" Placeholder="enter blog name"  PlaceholderColor="DarkGray" Text="{Binding BlogName}" FontSize="Micro" >
+
+                    </Entry>
+             
+
+                <Frame Margin="5"  Padding="0" Grid.Column="1" CornerRadius="5" BackgroundColor="{StaticResource ControlBackgroundDefault}"  >
+                    <Picker  HorizontalTextAlignment="Center" VerticalOptions="Center"   Title="typ postu" VerticalTextAlignment="End"  TextColor="{StaticResource TextDefault}"   FontSize="Micro" ItemsSource="{Binding TypeList}"     SelectedItem="{Binding SelectedType}"></Picker>
+                </Frame>
+
+                <Frame Margin="5"  Padding="0" Grid.Column="2"  CornerRadius="5"  BackgroundColor="{StaticResource ControlBackgroundDefault}"  >
+                    <Picker HorizontalTextAlignment="Center" Title="ilość" VerticalTextAlignment="Center"  TextColor="{StaticResource TextDefault}"   FontSize="Micro" ItemsSource="{Binding NumberPostList}"  SelectedItem="{Binding SelectedNumberPosts}"></Picker>
+                </Frame>
+
+                <Button  Grid.Column="3" Padding="0" Text="&#xf01e;" BackgroundColor="Transparent" TextColor="{StaticResource TextDefault}"   
+       FontFamily="{StaticResource FontAwesomeSolid}" Command="{Binding Reload}" ></Button>
+            </Grid>
+            <Image   Aspect="AspectFill" Grid.Row="1" Grid.RowSpan="2"
+							
+                                       Source="{Binding Response.response.blog.theme.header_image}">
+            </Image>
+            <Frame Grid.Row="1" HasShadow="True" HorizontalOptions="Center"  Padding="0" BackgroundColor="white" CornerRadius="10"  Margin="0,20,0,15"  >
+                <Image    WidthRequest="100" HeightRequest="100" Aspect="AspectFit" 
+							
+                                       Source="{Binding Response.response.blog.avatar[0].url}">
+                </Image>
+            </Frame>
+
+            <Frame Grid.Row="2"  HasShadow="True" HorizontalOptions="Center"  Padding="0" Margin="0,0,0,15" BackgroundColor="Transparent" VerticalOptions="Center" CornerRadius="5"    >
+                <Label HorizontalOptions="Center"   BackgroundColor="{StaticResource ControlBackgroundDefault}"   Padding="10,2,10,5"  FontSize="Micro" TextColor="#d0e0e3">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="{Binding  Response.response.blog.name}" ></Span>
+                                <Span Text=".tumblr.com"></Span>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Frame>
+         
+            <CollectionView ItemsSource="{Binding Items}" Grid.Row="3"  BackgroundColor="White"
+             >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid   HorizontalOptions="Fill" VerticalOptions="FillAndExpand" BackgroundColor="Transparent">
+                            <Frame HasShadow="True"  Padding="0" BackgroundColor="white" CornerRadius="10" Margin="10,10,10,10"
+                 >
+
+                                <Grid RowDefinitions="auto,auto,auto,auto,auto,*" >
+                                    <Label Grid.Row="0" x:Name="questionlabel" Margin="5,0,5,0" TextType="Html" Text="{Binding question}"  IsVisible="{Binding question, Converter={StaticResource cnvEmptyToBool}}" FontSize="Small" TextColor="Black" >
+                                   
+                                    </Label>
+                                    <Label Grid.Row="1" Margin="5,0,5,0"   TextType="Html" Text="{Binding answer}" IsVisible="{Binding answer, Converter={StaticResource cnvEmptyToBool}}"  FontSize="Small" TextColor="Black" ></Label>
+                                    <Label Grid.Row="2" Margin="5,0,5,0" TextType="Html" Text="{Binding text}" IsVisible="{Binding text, Converter={StaticResource cnvEmptyToBool}}"  FontSize="Small" TextColor="Black" ></Label>
+
+
+                                    <Label Grid.Row="3" Margin="5,0,5,0" x:Name="bodylabel"   TextType="Html" Text="{Binding body}" IsVisible="{Binding body, Converter={StaticResource cnvEmptyToBool}}"  FontSize="Small" TextColor="Black" >
+                                      
+                                   
+                                    </Label>
+                                    <Image Grid.Row="4" Margin="10,10,10,0" Aspect="AspectFit" Source="{Binding photos[0].original_size.url}" VerticalOptions="Center" HorizontalOptions="Center"></Image>
+                                    <Label Grid.Row="5" HeightRequest="30"  Margin="0,0,10,0"  Text="{Binding date, Converter={StaticResource cnvGMTToLocal}}" VerticalOptions="End" HorizontalOptions="End" FontSize="10" FontAttributes="Italic" />
+                                </Grid>
+
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Grid.Row="3" HorizontalOptions="Center" IsVisible="false" Margin="20" Text="No posts for this criteria">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Items.Count}" Value="0">
+                        <Setter Property="IsVisible" Value="True"></Setter>
+                    </DataTrigger>
+               
+                </Label.Triggers>
+            </Label>
+        </Grid>
+    </Grid>
+</ContentPage>

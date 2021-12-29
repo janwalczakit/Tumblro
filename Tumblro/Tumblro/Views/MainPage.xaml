@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Tumblro.Views.MainPage" NavigationPage.HasNavigationBar="False" 
+              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:local1="clr-namespace:Tumblro"
+             ios:Page.UseSafeArea="true"
+             Title="{Binding Title}" BackgroundColor="{StaticResource CBackgroundDefault}"     >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local1:InvertBoolenConverter x:Key="cnvInvert"></local1:InvertBoolenConverter>
+       
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*,3*,*">
+        <ScrollView Grid.Row="1">
+            <StackLayout  HorizontalOptions="Center" VerticalOptions="StartAndExpand" Orientation="Vertical">
+                <Label TextColor="{StaticResource TextDefault}"    HorizontalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="Tumblr" FontSize="40" TextTransform="Uppercase"></Span>
+                                <Span Text="viewer" FontSize="Body"></Span>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Entry TextColor="{StaticResource TextDefault}" PlaceholderColor="DarkGray"  Placeholder="enter blog name" Margin="20,30,20,10" Text="{Binding BlogName, Mode=OneWayToSource}"></Entry>
+                <Label TextColor="Red" Margin="20,0,0,0" Text="{Binding EntryValidationText}" IsVisible="{Binding EntryValidation, Converter={StaticResource cnvInvert}}"></Label>
+                <Grid ColumnDefinitions="3*,2*,1*" Margin="20,10,20,10" >
+                    <Frame Grid.Column="0" Padding="0" CornerRadius="10">
+                        <Picker  Title="posts type" TitleColor="{StaticResource TextDefault}"    FontSize="Small"  BackgroundColor="{StaticResource ControlBackgroundDefault}"   TextColor="{StaticResource TextDefault}"   ItemsSource="{Binding TypeList}"  HorizontalTextAlignment="Center"  SelectedItem="{Binding SelectedType}"></Picker>
+                    </Frame>
+                    <Frame Padding="0" Grid.Column="1" CornerRadius="10" Margin="10,0,0,0">
+                        <Picker  Title="quanity" TitleColor="{StaticResource TextDefault}"    BackgroundColor="{StaticResource ControlBackgroundDefault}"   HorizontalTextAlignment="Center"  TextColor="{StaticResource TextDefault}"   FontSize="Small" ItemsSource="{Binding NumberPostList}"  SelectedItem="{Binding SelectedNumberPosts}"></Picker>
+                    </Frame>
+                    <Button Grid.Column="2" Text="&#xf105;"     FontFamily="{StaticResource FontAwesomeSolid}" Command="{Binding ShowTumblr}" BackgroundColor="Transparent" TextColor="{StaticResource TextDefault}"   ></Button>
+                </Grid>
+                <Grid ColumnDefinitions="3*,2*,1*" Margin="20,10,20,10" >
+                    <Label Grid.Column="0" TextColor="Red" Text="{Binding PostTypeValidationText}" IsVisible="{Binding PostTypeValidation, Converter={StaticResource cnvInvert}}"></Label>
+                    <Label Grid.Column="1" TextColor="Red" Text="{Binding PostNumberValidationText}" IsVisible="{Binding PostNumberValidation, Converter={StaticResource cnvInvert}}"></Label>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
