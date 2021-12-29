@@ -1,4 +1,6 @@
 ﻿using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace Tumblro.ViewModels
 {
-    public class SampleDialogViewModel : IDialogAware
+    public class SampleDialogViewModel : BindableBase, IDialogAware
     {
         public SampleDialogViewModel()
         {
@@ -23,7 +25,21 @@ namespace Tumblro.ViewModels
         {
         }
 
-        public void OnDialogOpened(IDialogParameters parameters) { }
+        public void OnDialogOpened(IDialogParameters parameters) {
+            ErrorMessage = parameters.GetValue<string>("message");
+        }
+
+
+        private string _errorMessage { get; set; }
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                RaisePropertyChanged("ErrorMessage");
+            }
+        }
     }
 }
 

@@ -26,7 +26,7 @@ ios:Page.UseSafeArea="true"
         <Grid RowSpacing="0" RowDefinitions="0.5*,auto,auto,6*"  IsVisible="{Binding IsLoading, Converter={StaticResource cnvInvert}}"
             >
             <Grid BackgroundColor="{StaticResource CBackgroundDefault}" ColumnSpacing="5" RowSpacing="0"  Grid.Row="0" ColumnDefinitions="3*,2*,*,*" >
-             <Entry  Grid.Column="0" TextColor="{StaticResource TextDefault}" Placeholder="enter blog name"  PlaceholderColor="DarkGray" Text="{Binding BlogName}" FontSize="Micro" >
+             <Entry  Grid.Column="0" TextColor="{StaticResource TextDefault}" Placeholder="enter blog name" Margin="10,0,0,0"  PlaceholderColor="DarkGray" Text="{Binding BlogName}" FontSize="Micro" >
 
                     </Entry>
              
@@ -95,7 +95,7 @@ ios:Page.UseSafeArea="true"
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Grid.Row="3" HorizontalOptions="Center" IsVisible="false" Margin="20" Text="No posts for this criteria">
+            <Label Grid.Row="3" HorizontalOptions="Center" IsVisible="false" Margin="20" Text="Blog found but no posts for this criteria!">
                 <Label.Triggers>
                     <DataTrigger TargetType="Label" Binding="{Binding Items.Count}" Value="0">
                         <Setter Property="IsVisible" Value="True"></Setter>

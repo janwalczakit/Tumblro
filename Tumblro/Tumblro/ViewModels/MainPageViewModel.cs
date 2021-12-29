@@ -35,7 +35,7 @@ namespace Tumblro.ViewModels
         /// </summary>
         private void ShowDialog()
         {
-            var message = "This is a message that should be shown in the dialog.";
+            var message = "There is no such blog or something else went wrong. Try again!";
             _dialogService.ShowDialog("DismissableDialog", new DialogParameters($"message={message}"), r =>
             {
 
@@ -57,20 +57,20 @@ namespace Tumblro.ViewModels
             if (BlogName == null || BlogName.Length == 0)
             {
                 EntryValidation = false;
-                EntryValidationText = "UserName must be longer then 0";
+                EntryValidationText = "UserName must be longer than 0";
                 anyvalidation = true;
             }
             if (SelectedType == "")
             {
                 PostTypeValidation = false;
-                PostTypeValidationText = "Please pick posts type";
+                PostTypeValidationText = "Please select posts type";
                 anyvalidation = true;
             }
 
             if (SelectedNumberPosts == 0)
             {
                 PostNumberValidation = false;
-                PostNumberValidationText = "Please pick posts quanity";
+                PostNumberValidationText = "Please select posts quantity";
                 anyvalidation = true;
             }
 

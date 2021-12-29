@@ -71,6 +71,7 @@ namespace Tumblro.ViewModels
                 else
                 {
                     ShowDialog();
+                    IsLoading = false;
                     return;
                 }
             }
@@ -101,7 +102,7 @@ namespace Tumblro.ViewModels
         /// </summary>
         private void ShowDialog()
         {
-            var message = "This is a message that should be shown in the dialog.";
+            var message = "There is no such blog or something else went wrong. Try again!";
             //using the dialog service as-is
             _dialogService.ShowDialog("DismissableDialog", new DialogParameters($"message={message}"), r =>
             {
